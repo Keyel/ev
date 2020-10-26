@@ -1,7 +1,11 @@
 interface Invoice {
-    value: number;
-    from: string;
-    // date_teljesites: string;
+    sorszam: string,
+    teljesites: string,
+    kelt: string,
+    hatarido: string,
+    amount: string,
+    partner: string,
+    leiras: string,
 }
 
 export default Invoice;
