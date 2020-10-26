@@ -2,7 +2,10 @@
     "compilerOptions": {
       "moduleResolution": "node",
       "sourceMap": true,
-      "target": "es2017",
+      "target": "ES2019",
+      "lib": [
+        "ES2019"
+      ],
       "outDir": "./dist",
       "baseUrl": "./src"
     },
