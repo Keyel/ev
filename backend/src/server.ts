@@ -1,10 +1,12 @@
 import { CommonController } from './common/common.controller';
 import App from './app';
 import InvoicesController from './invoices/invoice.controller';
+import TransferController from './transfers/transfer.controller';
  
 const app = new App(
   [
     new InvoicesController(),
+    new TransferController(),
     new CommonController()
   ],
   5000,
