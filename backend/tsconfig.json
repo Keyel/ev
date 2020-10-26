@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",
+      "moduleResolution": "node",
       "sourceMap": true,
       "target": "es2017",
       "outDir": "./dist",
