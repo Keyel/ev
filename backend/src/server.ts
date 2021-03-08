@@ -3,6 +3,10 @@ import App from './app';
 import InvoicesController from './invoices/invoice.controller';
 import TransferController from './transfers/transfer.controller';
  
+
+// https://wanago.io/2018/12/03/typescript-express-tutorial-routing-controllers-middleware/
+
+
 const app = new App(
   [
     new InvoicesController(),

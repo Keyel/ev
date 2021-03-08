@@ -6,6 +6,8 @@ interface Invoice {
     amount: string,
     partner: string,
     leiras: string,
+
+    tartozas: number
 }
 
 export default Invoice;

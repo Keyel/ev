@@ -6,7 +6,7 @@ interface Transfer {
     konyvelesiSzamlaNeve: String,
     partnerSzamla: String,
     partnerNev: String,
-    osszeg: String,
+    osszeg: number,
     deviza: String,
     kozlemeny: String
 }

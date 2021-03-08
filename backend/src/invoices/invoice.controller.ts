@@ -3,6 +3,8 @@ import * as express from 'express';
 import { getFileNames } from '../utils';
 import Invoice from './invoice.interface';
 import * as fs from 'fs'
+import { TransferModel } from '../transfers/transfer.model';
+import Transfer from '../transfers/transfer.interface';
 
 
 class InvoiceController implements IController {
@@ -35,6 +37,8 @@ class InvoiceController implements IController {
     }
 
     private getInvoicesFromFile(pathes: any[]) {
+        const transfers = TransferModel.getSzamlaTortenet()
+
         return pathes.flatMap(path => {
             const file = fs.readFileSync(path, 'utf-8');
             // split the contents by new line
@@ -42,15 +46,27 @@ class InvoiceController implements IController {
             const [header, ...dataLines] = lines;
             const invoices = dataLines.map(line => {
                 const fields = line.split(/\t/);
-                const [sorszam, teljesites, kelt, hatarido, amount, partner, leiras] = fields;
+                const [sorszam, teljesites, kelt, hatarido, amountStr, partner, leiras] = fields;
+                const amount = parseInt(amountStr)
+
+                const relatedTransfers: Transfer[] = transfers.flatMap(tr => {
+                    return tr.kozlemeny === sorszam || 
+                            tr.kozlemeny.includes(sorszam+' ') || 
+                            tr.kozlemeny.includes(sorszam+'.') || 
+                            tr.kozlemeny.includes(sorszam+'szla')? tr : []
+                })
+
+                const sum = relatedTransfers.map(tr => tr.osszeg).reduce((a,b) => a+b, 0)
+
                 return {
                     "sorszam": sorszam,
                     "teljesites": teljesites,
                     "kelt": kelt,
                     "hatarido": hatarido,
-                    "amount": amount,
+                    "amount": amountStr,
                     "partner": partner,
                     "leiras": leiras,
+                    "tartozas": amount - sum
                 } as Invoice;
             });
 

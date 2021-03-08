@@ -2,7 +2,8 @@ import { IController } from 'controller.base';
 import * as express from 'express';
 import { getFileNames } from '../utils';
 import Transfer from './transfer.interface';
-import * as fs from 'fs'
+import { TransferModel } from './transfer.model';
+
 
 
 class TransferController implements IController {
@@ -19,11 +20,9 @@ class TransferController implements IController {
     }
 
     getAllTransfers = (request: express.Request, response: express.Response) => {
-        const pathes = getFileNames("szamlatortenet")
-        const transfers = 
-        this.getTransfersFromFile(pathes) 
+        const transfers = TransferModel.getSzamlaTortenet()
 
-        console.log(transfers)
+        //console.log(transfers)
 
         response.send(transfers);
     }
@@ -32,33 +31,6 @@ class TransferController implements IController {
         const transfer: Transfer = request.body;
         //this.transfers.push(transfer);
         response.send(transfer);
-    }
-
-    private getTransfersFromFile(pathes: any[]) {
-        return pathes.flatMap(path => {
-            const file = fs.readFileSync(path, 'utf-8');
-            // split the contents by new line
-            const lines = file.split(/\r?\n/);
-            const [header, ...dataLines] = lines;
-            const transfers = dataLines.map(line => {
-                const fields = line.split(/\t/);
-                const [konyvelesDatuma, tranzakcioAzon, tipus, konyvelesiSzamla, konyvelesiSzamlaNeve, partnerSzamla, partnerNev, osszeg, deviza, kozlemeny] = fields;
-                return {
-                    konyvelesDatuma: konyvelesDatuma,
-                    tranzakcioAzon: tranzakcioAzon,
-                    tipus: tipus,
-                    konyvelesiSzamla: konyvelesiSzamla,
-                    konyvelesiSzamlaNeve: konyvelesiSzamlaNeve,
-                    partnerSzamla: partnerSzamla,
-                    partnerNev: partnerNev,
-                    osszeg: osszeg,
-                    deviza: deviza,
-                    kozlemeny: kozlemeny,
-                } as Transfer;
-            });
-
-            return transfers;
-        });
     }
 }
 

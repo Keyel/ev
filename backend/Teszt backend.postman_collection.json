@@ -27,6 +27,58 @@
 		},
 		{
 			"name": "invoices",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"    <table bgcolor=\"#FFFFFF\">\r",
+							"        <tr>\r",
+							"            <th>sorszam</th>\r",
+							"            <th>teljesites</th>\r",
+							"            <th>kelt</th>\r",
+							"            <th>hatarido</th>\r",
+							"            <th>amount</th>\r",
+							"            <th>partner</th>\r",
+							"            <th>leiras</th>\r",
+							"            <th>tartozas</th>\r",
+							"        </tr>\r",
+							"\r",
+							"        {{#each response}}\r",
+							"            <tr>\r",
+							"                <td>{{sorszam}}</td>\r",
+							"                <td>{{teljesites}}</td>\r",
+							"                <td>{{kelt}}</td>\r",
+							"                <td>{{hatarido}}</td>\r",
+							"                <td>{{amount}}</td>\r",
+							"                <td>{{partner}}</td>\r",
+							"                <td>{{leiras}}</td>\r",
+							"                <td>{{tartozas}}</td>\r",
+							"            </tr>\r",
+							"        {{/each}}\r",
+							"    </table>\r",
+							"`;\r",
+							"\r",
+							"// Set visualizer\r",
+							"pm.visualizer.set(template, {\r",
+							"    // Pass the response body parsed as JSON as `data`\r",
+							"    response: pm.response.json()\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -132,6 +184,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
