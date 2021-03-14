@@ -1,14 +1,14 @@
 interface Transfer {
-    konyvelesDatuma: String,
-    tranzakcioAzon: String,
-    tipus: String,
-    konyvelesiSzamla: String,
-    konyvelesiSzamlaNeve: String,
-    partnerSzamla: String,
-    partnerNev: String,
+    konyvelesDatuma: string,
+    tranzakcioAzon: string,
+    tipus: string,
+    konyvelesiSzamla: string,
+    konyvelesiSzamlaNeve: string,
+    partnerSzamla: string,
+    partnerNev: string,
     osszeg: number,
-    deviza: String,
-    kozlemeny: String
+    deviza: string,
+    kozlemeny: string
 }
 
 export default Transfer;

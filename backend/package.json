@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-
   "watch": {
     "start": "{src}/*.ts"
-  },  
+  },
   "scripts": {
     "watch": "npm-watch start",
     "start": "ts-node src/server.ts",
@@ -17,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "line-reader": "^0.4.0",
     "npm-watch": "^0.7.0"
