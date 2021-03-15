@@ -1,5 +1,5 @@
 import { getFileNames } from "../utils";
-import Transfer from "./transfer.interface";
+import { BankTransfer, Transfer } from "./transfer.interface";
 import * as fs from 'fs'
 
 export
@@ -11,7 +11,7 @@ class TransferModel {
             // split the contents by new line
             const lines = file.split(/\r?\n/);
             const [header, ...dataLines] = lines;
-            const transfers : Transfer[] = dataLines.flatMap(line => {
+            const transfers : BankTransfer[] = dataLines.flatMap(line => {
                 const fields = line.split(/\t/);
                 const [konyvelesDatuma, tranzakcioAzon, tipus, konyvelesiSzamla, konyvelesiSzamlaNeve, partnerSzamla, partnerNev, osszegStr, deviza, kozlemeny] = fields;
                 const osszeg = parseInt(osszegStr)
@@ -26,16 +26,32 @@ class TransferModel {
                         osszeg: osszeg,
                         deviza: deviza,
                         kozlemeny: kozlemeny,
-                } as Transfer;
+                } as BankTransfer;
             });
 
             return transfers;
         });
     }
 
+    private static processBankiTransfers(bankiTransfers: BankTransfer[]) {
+        const ret = bankiTransfers.map(transfer => {
+            return {
+                datum: transfer.konyvelesDatuma,
+                tipus: transfer.tipus,
+                from: transfer.osszeg > 0 ? transfer.partnerNev : transfer.konyvelesiSzamlaNeve,
+                to: transfer.osszeg > 0 ? transfer.konyvelesiSzamlaNeve : transfer.partnerNev,
+                osszeg: transfer.osszeg,
+                kozlemeny: transfer.kozlemeny
+            } as Transfer
+        })
+        return ret
+    }
+    
     public static getSzamlaTortenet() {
         const pathes = getFileNames("szamlatortenet")
-        const transfers = this.getTransfersFromFile(pathes)
+        const bankiTransfers = TransferModel.getTransfersFromFile(pathes)
+        const transfers = TransferModel.processBankiTransfers(bankiTransfers)
         return transfers
     }
 }
+

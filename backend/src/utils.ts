@@ -3,7 +3,7 @@ import * as fs from 'fs'
 
 export
 const getFileNames = (prefix: string) => {
-    const ret = []
+    const ret : string[] = []
     const directoryPath = path.join(__dirname, '..', 'data')
     console.log(directoryPath)
     const files = fs.readdirSync(directoryPath)

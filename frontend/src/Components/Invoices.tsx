@@ -57,7 +57,7 @@ const Invoices: React.FC = () => {
                         <td><Badge>{invoice.teljesites}</Badge> </td>
                         <td><Badge>{invoice.kelt}</Badge></td>
                         <td><Badge>{invoice.hatarido}</Badge></td>
-                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 100000 ? "primary" : "secondary"}>{invoice.amount}</Badge></td>
+                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{invoice.amount}</Badge></td>
                         <td><Badge>{invoice.partner}</Badge></td>
                         <td><Badge>{invoice.leiras}</Badge></td>
                         <td style={{ textAlign:"right" }}><Badge variant= { invoice.tartozas ? "danger" : "success"}>{invoice.tartozas}</Badge></td>

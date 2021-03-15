@@ -1,4 +1,5 @@
-interface Transfer {
+export 
+interface BankTransfer {
     konyvelesDatuma: string,
     tranzakcioAzon: string,
     tipus: string,
@@ -11,4 +12,14 @@ interface Transfer {
     kozlemeny: string
 }
 
-export default Transfer;
+export
+interface Transfer {
+    datum: string,
+    tipus: string,
+    from: string,
+    to: string,
+    osszeg: number,
+    kozlemeny: string
+}
+
+

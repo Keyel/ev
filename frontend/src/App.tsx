@@ -5,19 +5,34 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 
 import { Invoices } from './Components/Invoices';
-import { Button } from 'react-bootstrap';
+import { Button, Nav, Navbar } from 'react-bootstrap';
+import { Transfers } from './Components/Transfers';
 
 const App: React.FC = () => {
+  const [page, setPage] = React.useState('invoices')
   return (
-    <Container className="p-3">
-      <Jumbotron>
-        <h1 className="header">
-          Invoices
-        </h1>
-      </Jumbotron>
+    <>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand href="#home">React-Bootstrap-keyel-EV</Navbar.Brand>
+        {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto" onSelect = { (selectedKey) => selectedKey!== null && setPage(selectedKey) }>
+            <Nav.Link eventKey="invoices">Invoices</Nav.Link>
+            <Nav.Link eventKey="transfers">Transfers</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>    
+      {/* <Container> */}
+        {/* <Jumbotron>
+          <h1 className="header">
+            Invoices
+          </h1>
+        </Jumbotron> */}
 
-      <Invoices></Invoices>
-    </Container>
+        { page === 'invoices' && <Invoices></Invoices> }
+        { page === 'transfers' && <Transfers></Transfers> }
+      {/* </Container> */}
+    </>
   );
 };
 

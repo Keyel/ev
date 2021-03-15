@@ -4,7 +4,7 @@ import { getFileNames } from '../utils';
 import Invoice from './invoice.interface';
 import * as fs from 'fs'
 import { TransferModel } from '../transfers/transfer.model';
-import Transfer from '../transfers/transfer.interface';
+import { Transfer } from '../transfers/transfer.interface';
 
 
 class InvoiceController implements IController {

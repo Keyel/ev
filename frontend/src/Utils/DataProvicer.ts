@@ -1,4 +1,5 @@
 import Invoice from "../Interfaces/invoice.interface";
+import Transfer from "../Interfaces/transfer.interface";
 import ServerCommunicator from "./ServerCommunicator"
 
 // const basicAuth = "tron_webui_api:213tuning123"
@@ -58,6 +59,13 @@ class InvoiceProvider extends DataServiceBase {
     // }
 }
 
+class TransferProvider extends DataServiceBase {
+    public async getAll(params?: string[][]) {
+        const url = getDataServiceFullUrl("transfers")
+        return this.server.getObject<Transfer[]>(url, "", params);
+    }
+}
+
 
 
 
@@ -81,6 +89,10 @@ class DataProvider {
 
     public static get invoice(): InvoiceProvider {
         return new InvoiceProvider();
+    }
+
+    public static get transfer(): TransferProvider {
+        return new TransferProvider();
     }
     
     // // Session

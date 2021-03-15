@@ -1,7 +1,7 @@
 import { IController } from 'controller.base';
 import * as express from 'express';
 import { getFileNames } from '../utils';
-import Transfer from './transfer.interface';
+import { Transfer } from './transfer.interface';
 import { TransferModel } from './transfer.model';
 
 
@@ -20,7 +20,7 @@ class TransferController implements IController {
     }
 
     getAllTransfers = (request: express.Request, response: express.Response) => {
-        const transfers = TransferModel.getSzamlaTortenet()
+        const transfers = TransferModel.getSzamlaTortenet().sort( (transfer1, transfer2) => transfer2.datum > transfer1.datum ? 1 : -1)
 
         //console.log(transfers)
 
