@@ -1,11 +1,9 @@
 import React from 'react';
 
 
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Container from 'react-bootstrap/Container';
 
 import { Invoices } from './Components/Invoices';
-import { Button, Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { Transfers } from './Components/Transfers';
 
 const App: React.FC = () => {

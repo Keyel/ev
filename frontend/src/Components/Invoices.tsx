@@ -5,9 +5,10 @@ import { Popover } from 'react-bootstrap'
 import { OverlayTrigger } from 'react-bootstrap'
 import Invoice from '../Interfaces/invoice.interface'
 import DataProvider from '../Utils/DataProvicer'
+import { Transfers } from './Transfers'
 
 export
-const Invoices: React.FC = () => {
+const Invoices = () => {
     const [invoices, setInvoices] = React.useState<Invoice[]>([])
 
     React.useEffect( () => {
@@ -22,11 +23,18 @@ const Invoices: React.FC = () => {
     }
     ,[])
 
-    const popover = (
+    const popover = (invoice: Invoice) => (
         <Popover id="popover-basic">
-            <Popover.Title as="h3">Extra info:</Popover.Title>
-            <Popover.Content>
-                "Ez lesz a kovetkezo feladat, ide ki kell tenni a hozza tartozo utalasok infojat"
+            <Popover.Title as="h3">Related transfers:</Popover.Title>
+            <Popover.Content >
+                <Transfers p_transfers = {invoice.relatedTransfers}/>
+                {/* { invoice.relatedTransfers.map ( transfer => {
+                    return (
+                        <>
+                            "Transfer"
+                        </>
+                    )
+                })} */}
             </Popover.Content>
         </Popover>
     )
@@ -47,21 +55,22 @@ const Invoices: React.FC = () => {
                 </tr>
             </thead>
             <tbody>
-                { invoices.map(invoice => { return (
+                { invoices.map(invoice => { 
+                const formazott_osszeg = invoice.amount.toLocaleString("HU")
+                const formazott_tartozas = invoice.tartozas.toLocaleString("HU")
+                return (
+                    <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
                     <tr>
-                        <td>
-                            <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-                                <Badge>{invoice.sorszam}</Badge>
-                            </OverlayTrigger>
-                        </td>
-                        <td><Badge>{invoice.teljesites}</Badge> </td>
+                        <td><Badge>{invoice.sorszam}</Badge></td>
+                        <td><Badge>{invoice.teljesites}</Badge></td>
                         <td><Badge>{invoice.kelt}</Badge></td>
                         <td><Badge>{invoice.hatarido}</Badge></td>
-                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{invoice.amount}</Badge></td>
+                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{formazott_osszeg}</Badge></td>
                         <td><Badge>{invoice.partner}</Badge></td>
                         <td><Badge>{invoice.leiras}</Badge></td>
-                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.tartozas ? "danger" : "success"}>{invoice.tartozas}</Badge></td>
+                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.tartozas ? "danger" : "success"}>{formazott_tartozas}</Badge></td>
                     </tr>
+                    </OverlayTrigger>
                 )})}
             </tbody>
             </Table>            

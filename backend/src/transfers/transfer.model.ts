@@ -47,9 +47,62 @@ class TransferModel {
         return ret
     }
     
+    // private def correctKHBError(t: TransferRow)(implicit file: File) = {
+    //     val whenFixed = DateTime.parse("2014-07-03")
+    //     val lastModified = new DateTime(file.lastModified())
+    
+    //     if( (lastModified.isAfter(whenFixed)) || (t.osszeg startsWith("-")) )
+    //       t
+    //     else
+    //       t.copy( konyvelesiSzamlaNeve = t.partnerNev, partnerNev = t.konyvelesiSzamlaNeve)
+    //   }
+    
+    //   private def removeIBANPrefix(t: TransferRow) =
+    //     if(t.partnerSzamla.toUpperCase() startsWith("HU"))
+    //       t.copy( partnerSzamla = t.partnerSzamla drop 4) //pl. HU95 (hash kod)
+    //     else
+    //       t
+      
+    //   private def nonameToHKB(t: TransferRow) = 
+    //     if(t.partnerNev.isEmpty)
+    //       t.copy( partnerNev = "K&H Bank" )
+    //     else
+    //       t
+    
+    //   private def noAccountToQuestion(t: TransferRow) = 
+    //     if(t.partnerSzamla.isEmpty)
+    //       t.copy( partnerSzamla = t.partnerNev )
+    //     else
+    //       t
+          
+    //   //HU levagasa utan
+    //   private def missingZeros(t: TransferRow) = {
+    //     val t1 =
+    //     if(t.partnerSzamla.size == 2*8)
+    //       t.copy( partnerSzamla = t.partnerSzamla + "00000000" )
+    //     else
+    //       t
+    
+    //     if(t1.konyvelesiSzamla.size == 2*8)
+    //       t1.copy( konyvelesiSzamla = t.konyvelesiSzamla + "00000000" )
+    //     else
+    //       t1
+    //   }
+
+    private static khbFix = (transfer: BankTransfer) => {
+        const whenFixed = Date.parse("2015-01-01")  // Date.parse("2014-07-03")
+        const kd = Date.parse(transfer.konyvelesDatuma)
+
+        return ( kd > whenFixed || transfer.osszeg < 0) ? transfer : {
+            ... transfer,
+            konyvelesiSzamlaNeve: transfer.partnerNev, 
+            partnerNev: transfer.konyvelesiSzamlaNeve 
+        }
+    }
+
     public static getSzamlaTortenet() {
         const pathes = getFileNames("szamlatortenet")
-        const bankiTransfers = TransferModel.getTransfersFromFile(pathes)
+        const bankiTransfers = TransferModel.getTransfersFromFile(pathes).map( TransferModel.khbFix )
         const transfers = TransferModel.processBankiTransfers(bankiTransfers)
         return transfers
     }

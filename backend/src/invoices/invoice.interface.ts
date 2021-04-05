@@ -1,3 +1,5 @@
+import { Transfer } from "transfers/transfer.interface";
+
 interface Invoice {
     sorszam: string
     teljesites: string
@@ -8,6 +10,8 @@ interface Invoice {
     leiras: string
 
     tartozas: number
+
+    relatedTransfers: Transfer[]
 }
 
 export default Invoice; 

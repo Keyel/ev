@@ -70,7 +70,8 @@ class InvoiceController implements IController {
                     "amount": amount,
                     "partner": partner,
                     "leiras": leiras,
-                    "tartozas": amount - sum
+                    "tartozas": amount - sum,
+                    "relatedTransfers": relatedTransfers
                 } as Invoice;
             });
 
