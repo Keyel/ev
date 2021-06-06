@@ -81,3 +81,8 @@ class InvoiceController implements IController {
 }
 
 export default InvoiceController;
+
+// //tranzakcio_azon:invoice sorszam
+// const relatedFix = {
+//     "BNK21061DLDHLJDF" : "KL-2021-1"
+// }

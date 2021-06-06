@@ -16,3 +16,10 @@ const getFileNames = (prefix: string) => {
     console.log(ret)
     return ret
 }
+
+
+export
+const atalanyFrom = new Date('2021-06-01')
+
+export 
+const kataFrom = new Date('2019-02-01')

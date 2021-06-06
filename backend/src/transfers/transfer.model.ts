@@ -100,9 +100,16 @@ class TransferModel {
         }
     }
 
+    private static kozlemenyFix = (transfer: BankTransfer) => {
+        return ( transfer.kozlemeny === "KL-2020-1 szla kiegy.Rendszerkbt. II. hó") ? {
+            ... transfer,
+            kozlemeny: "KL-2021-1 szla kiegy.Rendszerkbt. II. hó", 
+        } : transfer
+    }
+
     public static getSzamlaTortenet() {
         const pathes = getFileNames("szamlatortenet")
-        const bankiTransfers = TransferModel.getTransfersFromFile(pathes).map( TransferModel.khbFix )
+        const bankiTransfers = TransferModel.getTransfersFromFile(pathes).map( TransferModel.khbFix ).map( TransferModel.kozlemenyFix )
         const transfers = TransferModel.processBankiTransfers(bankiTransfers)
         return transfers
     }
