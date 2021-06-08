@@ -1,7 +1,5 @@
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
 import { IController } from 'controller.base';
-import { threadId } from 'worker_threads';
 import * as cors from 'cors'
 
 function loggerMiddleware(request: express.Request, response: express.Response, next: () => void) {
@@ -24,7 +22,7 @@ class App {
     private initializeMiddlewares() {
         this.app.use(cors())
         this.app.use(loggerMiddleware)
-        this.app.use(bodyParser.json())
+        this.app.use(express.json())
     }
 
     private initializeControllers(controllers : IController[]) {

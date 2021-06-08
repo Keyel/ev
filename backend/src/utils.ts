@@ -18,6 +18,19 @@ const getFileNames = (prefix: string) => {
 }
 
 
+export const getMonth = (_date: Date) => {
+    const date = new Date(_date)
+    date.setHours(0,0,0,0)
+    date.setDate(1)
+    return date
+}
+
+export 
+const incMonth = (month: Date) => {
+    month.setMonth(month.getMonth()+1)
+}
+
+
 export
 const atalanyFrom = new Date('2021-06-01')
 

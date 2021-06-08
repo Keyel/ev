@@ -2,6 +2,7 @@ import { CommonController } from './common/common.controller';
 import App from './app';
 import InvoicesController from './invoices/invoice.controller';
 import TransferController from './transfers/transfer.controller';
+import AtalanyController from './atalany/atalany.controller';
  
 
 // https://wanago.io/2018/12/03/typescript-express-tutorial-routing-controllers-middleware/
@@ -11,6 +12,7 @@ const app = new App(
   [
     new InvoicesController(),
     new TransferController(),
+    new AtalanyController(),
     new CommonController()
   ],
   5000,

@@ -22,4 +22,3 @@ interface Transfer {
     kozlemeny: string
 }
 
-

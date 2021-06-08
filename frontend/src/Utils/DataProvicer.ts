@@ -1,3 +1,4 @@
+import { AtalanyHonap } from "../Interfaces/atalany.interface";
 import Invoice from "../Interfaces/invoice.interface";
 import Transfer from "../Interfaces/transfer.interface";
 import ServerCommunicator from "./ServerCommunicator"
@@ -66,6 +67,12 @@ class TransferProvider extends DataServiceBase {
     }
 }
 
+class AtalanyProvider extends DataServiceBase {
+    public async getAll(params?: string[][]) {
+        const url = getDataServiceFullUrl("atalany")
+        return this.server.getObject<AtalanyHonap[]>(url, "", params);
+    }
+}
 
 
 
@@ -93,6 +100,10 @@ class DataProvider {
 
     public static get transfer(): TransferProvider {
         return new TransferProvider();
+    }
+
+    public static get atalany(): AtalanyProvider {
+        return new AtalanyProvider();
     }
     
     // // Session
