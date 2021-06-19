@@ -18,7 +18,7 @@ const getFileNames = (prefix: string) => {
 }
 
 
-export const getMonth = (_date: Date) => {
+export const getMonthFirstDay = (_date: Date) => {
     const date = new Date(_date)
     date.setHours(0,0,0,0)
     date.setDate(1)
@@ -27,7 +27,9 @@ export const getMonth = (_date: Date) => {
 
 export 
 const incMonth = (month: Date) => {
-    month.setMonth(month.getMonth()+1)
+    const ret = new Date(month)
+    ret.setMonth(ret.getMonth()+1)
+    return ret
 }
 
 

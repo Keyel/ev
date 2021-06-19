@@ -21,7 +21,7 @@ class AtalanyController implements IController {
     getMonths = (request: express.Request, response: express.Response) => {
 
         const ret = AtalanyModel.getMonths()
-
+        ret.reverse()
         response.send(ret);
     }
 }

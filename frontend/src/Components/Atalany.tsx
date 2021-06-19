@@ -40,6 +40,8 @@ const AtalanyHonapok = () => {
     //     </Popover>
     // )
 
+    // const colors = []
+
     return (
         <div>
             <Table striped bordered hover size="sm" /*variant="dark"*/>
@@ -67,9 +69,14 @@ const AtalanyHonapok = () => {
                     const tbj = month.tbj.toLocaleString("HU")
                     const szja = month.szja.toLocaleString("HU")
 
+                    const [_, m] = honap.split("-")
+                    const negyedev = ((parseInt(m-1) / 3) >> 0)
+                    const alpha = negyedev / 10
+                    const rowStyle = { backgroundColor : `rgba(155, 155, 155, ${alpha})` }
+
                 return (
                     // <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
-                    <tr>
+                    <tr style = {rowStyle}>
                         <td style={{ textAlign:"center" }}><Badge>{honap}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge>{bevetel}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge variant= { minimumApplied ? "danger" : "success"} >{jovedelem}</Badge></td> 

@@ -16,9 +16,9 @@ const App: React.FC = () => {
         {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto" onSelect = { (selectedKey) => selectedKey!== null && setPage(selectedKey) }>
-            <Nav.Link eventKey="invoices">Invoices</Nav.Link>
-            <Nav.Link eventKey="transfers">Transfers</Nav.Link>
-            <Nav.Link eventKey="atalany">Atalany</Nav.Link>
+            <Nav.Link eventKey="invoices">Számlák</Nav.Link>
+            <Nav.Link eventKey="transfers">Bank</Nav.Link>
+            <Nav.Link eventKey="atalany">Átalányadózás</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>    

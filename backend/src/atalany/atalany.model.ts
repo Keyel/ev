@@ -1,7 +1,7 @@
 import { response } from "express"
 import Invoice from "../invoices/invoice.interface"
 import { InvoiceModel } from "../invoices/invoice.model"
-import { getMonth, incMonth } from "../utils"
+import { getMonthFirstDay, incMonth } from "../utils"
 import { AtalanyHonap } from "./atalany.interface"
 
 
@@ -14,20 +14,19 @@ class AtalanyModel {
         // const atalanyInvoices = invoices.filter(invoice => invoice.teljesites >= '2021.06.01' )
 
         //atalanyadoyas kezdete
-        // const firstMonth = new Date(2021, 6 - 1, 1)
+        // const firstMonth = utils.atalanyFrom
 
-        const firstMonth = new Date(2020, 1 - 1, 1)
-        let thisMonth = getMonth(new Date())
-
-        const lastMonth = new Date(thisMonth)
-        incMonth(lastMonth)
+        const firstMonth = new Date('2019-01-01')
+        
+        let thisMonth = getMonthFirstDay(new Date())
+        const lastMonth = incMonth(thisMonth)
         
         
         let months: Date[] = [] 
-        const month = firstMonth
+        let month = firstMonth
         while(month < lastMonth) {
-            incMonth(month)
-            months.push(new Date(month))
+            months.push(month)
+            month = incMonth(month)
         }
 
         const garantaltBerminimum = 219000
@@ -43,8 +42,7 @@ class AtalanyModel {
         const ret: AtalanyHonap[] = months.map( month =>  {
 
             const relatedInvoices: Invoice[] = invoices.flatMap(invoice => {
-                const nextMonth = new Date(month)
-                incMonth(nextMonth)
+                const nextMonth = incMonth(month)
                 const telj = new Date(invoice.teljesites)
                 const related = month <= telj && telj < nextMonth
 
@@ -65,7 +63,7 @@ class AtalanyModel {
 
             return {
 
-                honap: `${month.getFullYear()}-${month.getMonth()}`,
+                honap: `${month.getFullYear()}-${month.getMonth() + 1}`,
                 invoices: relatedInvoices,
                 
                 bevetel: bevetel,
