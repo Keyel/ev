@@ -1,7 +1,6 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Badge } from 'react-bootstrap'
-import { Popover } from 'react-bootstrap'
 import { OverlayTrigger } from 'react-bootstrap'
 import Transfer from '../Interfaces/transfer.interface'
 import DataProvider from '../Utils/DataProvicer'

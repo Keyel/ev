@@ -1,12 +1,12 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Badge } from 'react-bootstrap'
-import { Popover } from 'react-bootstrap'
-import { OverlayTrigger } from 'react-bootstrap'
+// import { Popover } from 'react-bootstrap'
+// import { OverlayTrigger } from 'react-bootstrap'
 import { AtalanyHonap } from '../Interfaces/atalany.interface'
-import Invoice from '../Interfaces/invoice.interface'
+// import Invoice from '../Interfaces/invoice.interface'
 import DataProvider from '../Utils/DataProvicer'
-import { Transfers } from './Transfers'
+// import { Transfers } from './Transfers'
 
 export
 const AtalanyHonapok = () => {
@@ -69,8 +69,10 @@ const AtalanyHonapok = () => {
                     const tbj = month.tbj.toLocaleString("HU")
                     const szja = month.szja.toLocaleString("HU")
 
+                    // eslint-disable-next-line
                     const [_, m] = honap.split("-")
-                    const negyedev = ((parseInt(m-1) / 3) >> 0)
+                    
+                    const negyedev = ((parseInt(m) - 1) / 3) >> 0
                     const alpha = negyedev / 10
                     const rowStyle = { backgroundColor : `rgba(155, 155, 155, ${alpha})` }
 
