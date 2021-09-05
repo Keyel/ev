@@ -7,34 +7,49 @@ import Invoice from '../Interfaces/invoice.interface'
 import DataProvider from '../Utils/DataProvicer'
 import { Transfers } from './Transfers'
 
+type InvoiceProps = {
+    p_invoices?: Invoice[]
+}
+
 export
-const Invoices = () => {
+const Invoices = ({p_invoices} : InvoiceProps) => {
     const [invoices, setInvoices] = React.useState<Invoice[]>([])
+
+    // if(p_invoices !== undefined) {
+    //     setTransafers(p_invoices)
+    // }
 
     React.useEffect( () => {
 
-        const load = async () => {
-            const invs = await DataProvider.invoice.getAll()
-            console.log(invs)
-            setInvoices(invs)
+        if (p_invoices === undefined) {
+
+            const load = async () => {
+                const invs = await DataProvider.invoice.getAll()
+                console.log(invs)
+                setInvoices(invs)
+            }    
+            load()
+
+        } else {
+            setInvoices(p_invoices)
         }
-
-        load()
     }
-    ,[])
-
+    ,[p_invoices])    
+    
     const popover = (invoice: Invoice) => (
         <Popover id="popover-basic">
             <Popover.Title as="h3">Related transfers:</Popover.Title>
             <Popover.Content >
-                <Transfers p_transfers = {invoice.relatedTransfers}/>
-                {/* { invoice.relatedTransfers.map ( transfer => {
-                    return (
-                        <>
-                            "Transfer"
-                        </>
-                    )
-                })} */}
+                
+                    <Transfers p_transfers = {invoice.relatedTransfers}/>
+                    {/* { invoice.relatedTransfers.map ( transfer => {
+                        return (
+                            <>
+                                "Transfer"
+                            </>
+                        )
+                    })} */}
+
             </Popover.Content>
         </Popover>
     )
@@ -46,12 +61,12 @@ const Invoices = () => {
                 <tr>
                     <th>sorszam</th>
                     <th>teljesites</th>
-                    <th>kelt</th>
-                    <th>hatarido</th>
+                    {p_invoices === undefined && <th>kelt</th> }
+                    {p_invoices === undefined && <th>hatarido</th> }
                     <th>amount</th>
-                    <th>partner</th>
+                    {p_invoices === undefined && <th>partner</th> }
                     <th>leiras</th>
-                    <th>tartozas</th>
+                    {p_invoices === undefined && <th>tartozas</th> }
                 </tr>
             </thead>
             <tbody>
@@ -59,18 +74,20 @@ const Invoices = () => {
                 const formazott_osszeg = invoice.amount.toLocaleString("HU")
                 const formazott_tartozas = invoice.tartozas.toLocaleString("HU")
                 return (
-                    <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
+                    // <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
                     <tr>
                         <td><Badge>{invoice.sorszam}</Badge></td>
                         <td><Badge>{invoice.teljesites}</Badge></td>
-                        <td><Badge>{invoice.kelt}</Badge></td>
-                        <td><Badge>{invoice.hatarido}</Badge></td>
-                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{formazott_osszeg}</Badge></td>
-                        <td><Badge>{invoice.partner}</Badge></td>
+                        {p_invoices === undefined && <td><Badge>{invoice.kelt}</Badge></td> }
+                        {p_invoices === undefined && <td><Badge>{invoice.hatarido}</Badge></td>}
+                        <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
+                            <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{formazott_osszeg}</Badge></td>
+                        </OverlayTrigger>
+                        {p_invoices === undefined && <td><Badge>{invoice.partner}</Badge></td>}
                         <td><Badge>{invoice.leiras}</Badge></td>
-                        <td style={{ textAlign:"right" }}><Badge variant= { invoice.tartozas ? "danger" : "success"}>{formazott_tartozas}</Badge></td>
+                        {p_invoices === undefined && <td style={{ textAlign:"right" }}><Badge variant= { invoice.tartozas ? "danger" : "success"}>{formazott_tartozas}</Badge></td> }
                     </tr>
-                    </OverlayTrigger>
+                    
                 )})}
             </tbody>
             </Table>            

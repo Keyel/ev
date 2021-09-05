@@ -91,7 +91,8 @@ const Transfers = ( {p_transfers} : TransferProps ) => {
                         
                         <td style={{ textAlign:"right" }}><Badge variant= { 
                             transfer.from.includes("INFO") ? "info" : 
-                            transfer.to.includes("NAV") || transfer.to.includes("APEH")? "dark" :
+                            // transfer.to.includes("NAV") || transfer.to.includes("APEH")? "dark" :
+                            ["NAV", "APEH", "adó", "járulék"].some(str => transfer.to.includes(str))? "dark" :
                             transfer.to.includes("kamara") || transfer.to.includes("kormányzat") ? "secondary" : ""
                         }>{formazott_osszeg}</Badge></td>
                         

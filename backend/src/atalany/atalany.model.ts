@@ -1,7 +1,7 @@
 import { response } from "express"
 import Invoice from "../invoices/invoice.interface"
 import { InvoiceModel } from "../invoices/invoice.model"
-import { getMonthFirstDay, incMonth } from "../utils"
+import { getMonthFirstDay, incMonth, atalanyFrom } from "../utils"
 import { AtalanyHonap } from "./atalany.interface"
 
 
@@ -13,10 +13,10 @@ class AtalanyModel {
         const invoices = InvoiceModel.getAllInvoices()
         // const atalanyInvoices = invoices.filter(invoice => invoice.teljesites >= '2021.06.01' )
 
-        //atalanyadoyas kezdete
-        // const firstMonth = utils.atalanyFrom
+        //atalanyadozas kezdete
+        const firstMonth = atalanyFrom
 
-        const firstMonth = new Date('2019-01-01')
+        //const firstMonth = new Date('2019-01-01')
         
         let thisMonth = getMonthFirstDay(new Date())
         const lastMonth = incMonth(thisMonth)

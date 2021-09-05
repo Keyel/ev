@@ -19,12 +19,17 @@ class TransferController implements IController {
         this.router.post(this.path, this.createATransfer);
     }
 
+    public respMemo = undefined
     getAllTransfers = (request: express.Request, response: express.Response) => {
-        const transfers = TransferModel.getSzamlaTortenet().sort( (transfer1, transfer2) => transfer2.datum > transfer1.datum ? 1 : -1)
+        //if(this.respMemo === undefined) 
+        {
+            const transfers = TransferModel.getSzamlaTortenet().sort( (transfer1, transfer2) => transfer2.datum > transfer1.datum ? 1 : -1)
+            this.respMemo = transfers
+        }
 
         //console.log(transfers)
 
-        response.send(transfers);
+        response.send(this.respMemo);
     }
 
     createATransfer = (request: express.Request, response: express.Response) => {

@@ -5,8 +5,14 @@ import * as fs from 'fs'
 export
 class TransferModel {
 
+    static memo = {}
+
     private static getTransfersFromFile(pathes: any[]) {
         return pathes.flatMap(path => {
+            // if( this.memo.hasOwnProperty(path) ) {
+            //     return this.memo[path]
+            // }
+
             const file = fs.readFileSync(path, 'utf-8');
             // split the contents by new line
             const lines = file.split(/\r?\n/);
@@ -29,6 +35,7 @@ class TransferModel {
                 } as BankTransfer;
             });
 
+            // this.memo[path] = transfers
             return transfers;
         });
     }
@@ -107,11 +114,16 @@ class TransferModel {
         } : transfer
     }
 
+    static szamlatortenet = undefined
     public static getSzamlaTortenet() {
-        const pathes = getFileNames("szamlatortenet")
-        const bankiTransfers = TransferModel.getTransfersFromFile(pathes).map( TransferModel.khbFix ).map( TransferModel.kozlemenyFix )
-        const transfers = TransferModel.processBankiTransfers(bankiTransfers)
-        return transfers
+        if (this.szamlatortenet === undefined) {
+            const pathes = getFileNames("szamlatortenet")
+            const bankiTransfers = TransferModel.getTransfersFromFile(pathes).map( TransferModel.khbFix ).map( TransferModel.kozlemenyFix )
+            const transfers = TransferModel.processBankiTransfers(bankiTransfers)
+            this.szamlatortenet = transfers
+        }
+
+        return this.szamlatortenet
     }
 }
 

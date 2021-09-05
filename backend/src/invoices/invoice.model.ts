@@ -25,7 +25,8 @@ class InvoiceModel {
                 
                 const relatedTransfers: Transfer[] = transfers.flatMap(tr => {
                     const related = new RegExp(sorszam + '[a-zA-Z ü\.]')
-                    return tr.kozlemeny === sorszam || related.test(tr.kozlemeny) ? tr : []
+                    const related2 = new RegExp(sorszam.replace('-', '-?') + '[a-zA-Z ü\.]')
+                    return tr.kozlemeny === sorszam || related.test(tr.kozlemeny) || related2.test(tr.kozlemeny) ? tr : []
                     
                     // return tr.kozlemeny === sorszam || 
                     //         tr.kozlemeny.includes(sorszam+' ') || 
@@ -53,13 +54,17 @@ class InvoiceModel {
         });
     }
 
+    static invoiceMemo = undefined
     public static getAllInvoices() {
-        const pathes = getFileNames("invoices")
-        const invoices = this.getInvoicesFromFile(pathes) 
+        if(this.invoiceMemo === undefined) {
+            const pathes = getFileNames("invoices")
+            const invoices = this.getInvoicesFromFile(pathes) 
+        
+            console.log(invoices)
+            this.invoiceMemo = invoices
+        }
     
-        console.log(invoices)
-    
-        return invoices
+        return this.invoiceMemo
     }
 
 

@@ -1,12 +1,14 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
+import { OverlayTrigger, Popover, Table } from 'react-bootstrap'
 import { Badge } from 'react-bootstrap'
 // import { Popover } from 'react-bootstrap'
 // import { OverlayTrigger } from 'react-bootstrap'
 import { AtalanyHonap } from '../Interfaces/atalany.interface'
 // import Invoice from '../Interfaces/invoice.interface'
 import DataProvider from '../Utils/DataProvicer'
+import { Invoices } from './Invoices'
 // import { Transfers } from './Transfers'
+import '../index.css';
 
 export
 const AtalanyHonapok = () => {
@@ -24,21 +26,14 @@ const AtalanyHonapok = () => {
     }
     ,[])
 
-    // const popover = (invoice: Invoice) => (
-    //     <Popover id="popover-basic">
-    //         <Popover.Title as="h3">Related transfers:</Popover.Title>
-    //         <Popover.Content >
-    //             <Transfers p_transfers = {invoice.relatedTransfers}/>
-    //             {/* { invoice.relatedTransfers.map ( transfer => {
-    //                 return (
-    //                     <>
-    //                         "Transfer"
-    //                     </>
-    //                 )
-    //             })} */}
-    //         </Popover.Content>
-    //     </Popover>
-    // )
+    const popover = (honap: AtalanyHonap) => (
+        <Popover id="popover-basic" >
+            <Popover.Title as="h3">Related transfers:</Popover.Title>
+            <Popover.Content>
+                <Invoices p_invoices = {honap.invoices}/>
+            </Popover.Content>
+        </Popover>
+    )
 
     // const colors = []
 
@@ -77,16 +72,16 @@ const AtalanyHonapok = () => {
                     const rowStyle = { backgroundColor : `rgba(155, 155, 155, ${alpha})` }
 
                 return (
-                    // <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
                     <tr style = {rowStyle}>
                         <td style={{ textAlign:"center" }}><Badge>{honap}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge>{bevetel}</Badge></td> 
-                        <td style={{ textAlign:"right" }}><Badge variant= { minimumApplied ? "danger" : "success"} >{jovedelem}</Badge></td> 
+                        <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(month)}>
+                            <td style={{ textAlign:"right" }}><Badge variant= { minimumApplied ? "danger" : "success"} >{jovedelem}</Badge></td> 
+                        </OverlayTrigger>
                         <td style={{ textAlign:"right" }}><Badge>{szocho}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge>{tbj}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge>{szja}</Badge></td> 
                     </tr>
-                    // </OverlayTrigger>
                 )})}
             </tbody>
             </Table>            
