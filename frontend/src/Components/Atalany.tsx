@@ -46,9 +46,9 @@ const AtalanyHonapok = () => {
                     <th>bevetel</th>
                     <th>jovedelem</th>
                     {/* <th>minimumApplied</th> */}
-                    <th>szocho</th>
-                    <th>tbj</th>
-                    <th>szja</th>
+                    <th>szocho 258</th>
+                    <th>tbj 406</th>
+                    <th>szja 103</th>
                 </tr>
             </thead>
             <tbody>
