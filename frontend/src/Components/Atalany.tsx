@@ -49,6 +49,7 @@ const AtalanyHonapok = () => {
                     <th>szocho 258</th>
                     <th>tbj 406</th>
                     <th>szja 103</th>
+                    <th>afa 104</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,6 +64,7 @@ const AtalanyHonapok = () => {
                     const szocho = month.szocho.toLocaleString("HU")
                     const tbj = month.tbj.toLocaleString("HU")
                     const szja = month.szja.toLocaleString("HU")
+                    const afa = month.afa.toLocaleString("HU")
 
                     // eslint-disable-next-line
                     const [_, m] = honap.split("-")
@@ -81,6 +83,7 @@ const AtalanyHonapok = () => {
                         <td style={{ textAlign:"right" }}><Badge>{szocho}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge>{tbj}</Badge></td> 
                         <td style={{ textAlign:"right" }}><Badge>{szja}</Badge></td> 
+                        <td style={{ textAlign:"right" }}><Badge>{afa}</Badge></td> 
                     </tr>
                 )})}
             </tbody>

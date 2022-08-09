@@ -114,7 +114,7 @@ class TransferModel {
         } : transfer
     }
 
-    static szamlatortenet = undefined
+    static szamlatortenet : Transfer[] = undefined
     public static getSzamlaTortenet() {
         if (this.szamlatortenet === undefined) {
             const pathes = getFileNames("szamlatortenet")

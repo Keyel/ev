@@ -11,5 +11,6 @@ interface AtalanyHonap {
     
     szocho: number,
     tbj: number,
-    szja: number
+    szja: number,
+    afa: number,
 }

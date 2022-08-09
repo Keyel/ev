@@ -63,7 +63,8 @@ const Invoices = ({p_invoices} : InvoiceProps) => {
                     <th>teljesites</th>
                     {p_invoices === undefined && <th>kelt</th> }
                     {p_invoices === undefined && <th>hatarido</th> }
-                    <th>amount</th>
+                    <th>netto</th>
+                    <th>áfa</th>
                     {p_invoices === undefined && <th>partner</th> }
                     <th>leiras</th>
                     {p_invoices === undefined && <th>tartozas</th> }
@@ -72,6 +73,7 @@ const Invoices = ({p_invoices} : InvoiceProps) => {
             <tbody>
                 { invoices.map(invoice => { 
                 const formazott_osszeg = invoice.amount.toLocaleString("HU")
+                const formazott_afa = invoice.afa.toLocaleString("HU")
                 const formazott_tartozas = invoice.tartozas.toLocaleString("HU")
                 return (
                     // <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
@@ -83,6 +85,7 @@ const Invoices = ({p_invoices} : InvoiceProps) => {
                         <OverlayTrigger trigger="hover" placement = "auto" overlay={popover(invoice)}>
                             <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{formazott_osszeg}</Badge></td>
                         </OverlayTrigger>
+                        {p_invoices === undefined && <td style={{ textAlign:"right" }}><Badge variant= { invoice.amount > 150000 ? "primary" : "secondary"}>{formazott_afa}</Badge></td>}
                         {p_invoices === undefined && <td><Badge>{invoice.partner}</Badge></td>}
                         <td><Badge>{invoice.leiras}</Badge></td>
                         {p_invoices === undefined && <td style={{ textAlign:"right" }}><Badge variant= { invoice.tartozas ? "danger" : "success"}>{formazott_tartozas}</Badge></td> }

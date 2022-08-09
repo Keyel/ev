@@ -19,9 +19,9 @@ class InvoiceModel {
             const [header, ...dataLines] = lines;
             const invoices = dataLines.map(line => {
                 const fields = line.split(/\t/);
-                const [sorszam, teljesites, kelt, hatarido, amountStr, partner, leiras] = fields;
+                const [sorszam, teljesites, kelt, hatarido, amountStr, afaStr, partner, leiras] = fields;
                 const amount = parseInt(amountStr)
-
+                const afa = parseInt(afaStr)
                 
                 const relatedTransfers: Transfer[] = transfers.flatMap(tr => {
                     const related = new RegExp(sorszam + '[a-zA-Z ü\.]')
@@ -42,9 +42,10 @@ class InvoiceModel {
                     "kelt": kelt,
                     "hatarido": hatarido,
                     "amount": amount,
+                    "afa": afa,
                     "partner": partner,
                     "leiras": leiras,
-                    "tartozas": amount - sum,
+                    "tartozas": amount + afa - sum,
                     
                     "relatedTransfers": relatedTransfers
                 } as Invoice;

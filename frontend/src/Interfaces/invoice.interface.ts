@@ -6,6 +6,7 @@ interface Invoice {
     kelt: string
     hatarido: string
     amount: number
+    afa: number
     partner: string
     leiras: string
 

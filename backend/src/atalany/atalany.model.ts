@@ -3,7 +3,7 @@ import Invoice from "../invoices/invoice.interface"
 import { InvoiceModel } from "../invoices/invoice.model"
 import { getMonthFirstDay, incMonth, atalanyFrom } from "../utils"
 import { AtalanyHonap } from "./atalany.interface"
-
+import * as dayjs from 'dayjs'
 
 
 export
@@ -31,7 +31,12 @@ class AtalanyModel {
 
         const garantaltBerminimum = 219000
         const szochoAlapMinimumSzorzo = 112.5 / 100
-        const szochoAdoSzorzo = 15.5 / 100
+        const szochoAdoSzorzo = (month: Date) => {
+            if (month < new Date(2022,1,1)) 
+                return 15.5 / 100
+            else 
+                return 13 / 100
+        }
         const tbjAdoSzorzo = 18.5 / 100
         const atalanySzorzo = 1 - 0.4
         const szjaAdoSzorzo = 15 / 100
@@ -52,14 +57,17 @@ class AtalanyModel {
             const bevetel = relatedInvoices.map(inv => inv.amount).reduce((a,b) => a+b, 0)
             const jovedelem = bevetel * atalanySzorzo
             
-            const jovedelemSzocho = jovedelem * szochoAdoSzorzo
+            const jovedelemSzocho = jovedelem * szochoAdoSzorzo(month)
             const jovedelemTbj = jovedelem * tbjAdoSzorzo
 
             const minimumApplied = jovedelem < minSzochoAlap           
-            const szocho = Math.max(jovedelem, minSzochoAlap) * szochoAdoSzorzo
+            const szocho = Math.max(jovedelem, minSzochoAlap) * szochoAdoSzorzo(month)
             const tbj = Math.max(jovedelem, minTbjAlap) * tbjAdoSzorzo
 
             const szja = jovedelem * szjaAdoSzorzo
+
+            const afa = relatedInvoices.map(inv => inv.afa).reduce((a,b) => a+b, 0)
+
 
             return {
 
@@ -72,7 +80,8 @@ class AtalanyModel {
                 
                 szocho: szocho,
                 tbj: tbj,
-                szja: szja
+                szja: szja,
+                afa: afa
 
             } as AtalanyHonap
         })
